@@ -7,6 +7,7 @@
   <groupId>org.example</groupId>
   <artifactId>department-app</artifactId>
   <version>1.0-SNAPSHOT</version>
+
   <modules>
     <module>WEB-UI</module>
     <module>rest-service</module>
@@ -38,6 +39,12 @@
       <version>${spring.version}</version>
     </dependency>
 
+<!--    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring.version}</version>
+    </dependency>-->
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
@@ -52,8 +59,9 @@
 
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
+      <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -78,23 +86,15 @@
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
+      <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.30</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.12.0</version>
     </dependency>
-
-<!--    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-      <scope>test</scope>
-    </dependency>-->
-
   </dependencies>
 
   <build>

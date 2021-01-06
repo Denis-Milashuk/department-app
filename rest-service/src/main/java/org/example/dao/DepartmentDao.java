@@ -11,6 +11,7 @@ public interface DepartmentDao {
     boolean addDepartment(Department department);
     boolean removeDepartment (long id);
     boolean updateDepartment (long id, Department department);
+    Employee findEmployeeById(long id);
     boolean addEmployee(long departmentId,Employee employee);
     boolean removeEmployee (long id);
     boolean updateEmployee (long id, Employee employee);

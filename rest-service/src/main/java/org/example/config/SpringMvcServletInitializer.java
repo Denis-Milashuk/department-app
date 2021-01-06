@@ -7,14 +7,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 public class SpringMvcServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[]{DbConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{SpringConfig.class};
+        return new Class[]{WebConfig.class};
     }
 
     @Override

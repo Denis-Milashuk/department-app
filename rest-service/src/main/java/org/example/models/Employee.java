@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Employee implements Serializable {
     long id;
-    long departmentsId;
+    long departmentId;
     String firstName;
     String lastName;
     Date birthDate;
@@ -21,11 +21,11 @@ public class Employee implements Serializable {
     }
 
     public long getDepartmentId() {
-        return departmentsId;
+        return departmentId;
     }
 
-    public void setDepartmentsId(long departmentId) {
-        this.departmentsId = departmentId;
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getFirstName() {
@@ -64,7 +64,7 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employees{" +
                 "id=" + id +
-                ", departmentsId=" + departmentsId +
+                ", departmentsId=" + departmentId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
@@ -78,7 +78,7 @@ public class Employee implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
         return id == employee.id &&
-                departmentsId == employee.departmentsId &&
+                departmentId == employee.departmentId &&
                 Double.compare(employee.salary, salary) == 0 &&
                 firstName.equals(employee.firstName) &&
                 lastName.equals(employee.lastName) &&
@@ -87,6 +87,6 @@ public class Employee implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, departmentsId, firstName, lastName, birthDate, salary);
+        return Objects.hash(id, departmentId, firstName, lastName, birthDate, salary);
     }
 }

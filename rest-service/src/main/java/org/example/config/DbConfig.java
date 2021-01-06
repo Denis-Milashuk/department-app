@@ -8,13 +8,13 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 
+
 @Configuration
-/*@PropertySources({
-        @PropertySource("classpath:sqlQuery.properties"),
-        @PropertySource("classpath:jdbc.properties"),
-})*/
 @PropertySource("classpath:jdbc.properties")
-@ComponentScan(basePackages = "org.example")
+@ComponentScans({
+        @ComponentScan(basePackages = "org.example.models"),
+        @ComponentScan(basePackages = "org.example.dao")
+})
 public class DbConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DbConfig.class.getName());
@@ -28,12 +28,6 @@ public class DbConfig {
     @Value("${jdbc.password}")
     private String password;
 
-/*    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
-        return new PropertySourcesPlaceholderConfigurer();
-    }*/
-
-    @Lazy
     @Bean(destroyMethod = "close")
     public BasicDataSource dataSource(){
         try {
@@ -42,6 +36,7 @@ public class DbConfig {
             dataSource.setUrl(url);
             dataSource.setUsername(userName);
             dataSource.setPassword(password);
+            logger.debug("DBCP DataSource was created");
             return dataSource;
         }catch (Exception e){
             logger.error("DBCP DataSource bean cannot be created",e);
@@ -49,8 +44,10 @@ public class DbConfig {
         }
     }
 
+
     @Bean
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(){
+        logger.debug("Bean namedParameterJdbcTemplate was created");
         return new NamedParameterJdbcTemplate(dataSource());
     }
 

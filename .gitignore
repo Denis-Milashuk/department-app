@@ -2,3 +2,5 @@
 /out/
 /target/
 /src/
+rest-service/target/
+rest-service/test.log

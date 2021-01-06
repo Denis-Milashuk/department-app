@@ -15,6 +15,6 @@ CREATE TABLE IF NOT EXISTS employee
     last_name  VARCHAR(60) NOT NULL,
     birth_date DATE,
     salary NUMERIC(100,3),
-    UNIQUE (first_name,last_name),
+    CONSTRAINT Unique_Names UNIQUE (first_name,last_name),
     CONSTRAINT FK_employees FOREIGN KEY (department_id) REFERENCES department(id)
 );
