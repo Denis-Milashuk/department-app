@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.example.models.Department;
 import org.example.models.Employee;
+import org.example.models.PairCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
@@ -28,6 +29,8 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
 
     private NamedParameterJdbcTemplate template;
 
+    private static final String SQL_FIND_DEPARTMENT = "SELECT * FROM department WHERE id = :id";
+
     private static final String SQL_ADD_DEPARTMENT = "INSERT INTO department (tittle) VALUES (:new_tittle)";
 
     private static final String SQL_DELETE_EMPLOYEES_FROM_DELETED_DEPARTMENT = "DELETE FROM employee WHERE department_id = :id";
@@ -42,7 +45,7 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
                                                         "VALUES (:department_id, :first_name, :last_name, :birth_date, :salary)";
 
     private static final String SQL_UPDATE_EMPLOYEE = "UPDATE employee SET " +
-                                                    "department_id = :departmentId, " +
+                                                    "department_id = :department_Id, " +
                                                     "first_name = :first_name, " +
                                                     "last_name = :last_name, " +
                                                     "birth_date = :birth_date, " +
@@ -72,6 +75,12 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
         if (template == null){
             logger.error("NamedParameterJdbcTemplate was not injected");
             throw new BeanCreationException("NamedParameterJdbcTemplate is null on JdbcDepartmentDAO");}
+    }
+
+    @Override
+    public Department findDepartment(long id) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
+        return template.queryForObject(SQL_FIND_DEPARTMENT, parameterSource, new DepartmentMapper());
     }
 
     @Override
@@ -155,12 +164,12 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
     @Override
     public boolean updateEmployee(long id,Employee employee) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("departmentId",employee.getDepartmentId());
-        parameterSource.addValue("first_name",employee.getFirstName());
-        parameterSource.addValue("last_name",employee.getLastName());
-        parameterSource.addValue("birth_date",employee.getBirthDate());
-        parameterSource.addValue("salary",employee.getSalary());
-        parameterSource.addValue("id",id);
+        parameterSource.addValue("department_Id", employee.getDepartmentId());
+        parameterSource.addValue("first_name", employee.getFirstName());
+        parameterSource.addValue("last_name", employee.getLastName());
+        parameterSource.addValue("birth_date", employee.getBirthDate());
+        parameterSource.addValue("salary", employee.getSalary());
+        parameterSource.addValue("id", id);
         try {
             template.update(SQL_UPDATE_EMPLOYEE,parameterSource);
         }catch (DataAccessException e){
@@ -171,11 +180,8 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
     }
 
     @Override
-    public Map<Department, Double> findAllAverageSalariesByDepartment() {
-        Map<Department,Double> resultMap = new LinkedHashMap<>();
-        template.query(FIND_ALL_AVERAGE_SALARIES_BY_DEPARTMENT,new FindAllAverageSalariesByDepartmentMapper())
-                .forEach(x ->resultMap.put(x.getKey(),x.getValue()));
-        return resultMap;
+    public List<PairCase> findAllAverageSalariesByDepartment() {
+        return template.query(FIND_ALL_AVERAGE_SALARIES_BY_DEPARTMENT, new PairCaseMapper());
     }
 
     @Override
@@ -202,15 +208,26 @@ public class JdbcDepartmentDAO implements DepartmentDao, InitializingBean {
         return template.query(FIND_EMPLOYEES_BY_DEPARTMENT_ID_AND_BEHIND_TWO_BIRTHDATE,paramMap,new EmployeesMapper());
     }
 
-    private static class FindAllAverageSalariesByDepartmentMapper implements RowMapper<AbstractMap.SimpleEntry<Department, Double>>{
+    private static class DepartmentMapper implements RowMapper<Department>{
         @Override
-        public AbstractMap.SimpleEntry<Department, Double> mapRow(ResultSet resultSet, int i) throws SQLException {
+        public Department mapRow(ResultSet resultSet, int i) throws SQLException {
+            Department  department = new Department();
+            department.setId(resultSet.getLong("id"));
+            department.setTittle(resultSet.getString("tittle"));
+            department.setEmployees(new ArrayList<>());
+            return department;
+        }
+    }
+
+    private static class PairCaseMapper implements RowMapper<PairCase>{
+        @Override
+        public PairCase mapRow(ResultSet resultSet, int i) throws SQLException {
                 Department department = new Department();
                 department.setId(resultSet.getLong("id"));
                 department.setTittle(resultSet.getString("tittle"));
                 department.setEmployees(new ArrayList<>());
                 Double averageSalary = resultSet.getDouble(3);
-            return new AbstractMap.SimpleEntry<>(department,averageSalary);
+            return new PairCase(department,averageSalary);
         }
     }
 

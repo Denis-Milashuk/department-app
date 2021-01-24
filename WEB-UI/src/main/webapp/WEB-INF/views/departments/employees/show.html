@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<div>
+    <p th:text="'First Name:' + ${employee.getFirstName()}"></p>
+    <p th:text="'Last Name:' + ${employee.getLastName()}"></p>
+    <p th:text="'Department:' + ${employee.getDepartmentId()}"></p>
+    <p th:text="'Salary:' + ${employee.getSalary()} + ' rubles'"></p>
+    <p th:text="'Birthdate:' + ${employee.getBirthDate()}"></p>
+    <p th:text="'Id:' + ${employee.getId()}"></p>
+    <p>
+        <a th:href="@{/departments/{department_id}/employees/{id}/edit(department_id=${employee.getDepartmentId()},id=${employee.getId()})}">Edit</a>
+    </p>
+    <p>
+        <a th:href="@{/departments/{department_id}/employees(department_id = ${employee.getDepartmentId()})}">Back</a>
+    </p>
+</div>
+<hr/>
+<div>
+    <form th:method="DELETE" th:action="@{/departments/{department_id}/employees/{id}(department_id = ${employee.getDepartmentId()},id = ${employee.getId()})}">
+        <input type="submit" value="Delete employee">
+    </form>
+</div>
+</body>
+</html>

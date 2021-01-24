@@ -14,7 +14,6 @@ import javax.sql.DataSource;
         @ComponentScan(basePackages = "org.example.models"),
         @ComponentScan(basePackages = "org.example.dao")
 })
-@Profile("test")
 public class TestConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(TestConfig.class);

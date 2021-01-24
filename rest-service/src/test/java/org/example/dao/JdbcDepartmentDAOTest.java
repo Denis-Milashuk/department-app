@@ -3,6 +3,7 @@ package org.example.dao;
 import org.example.config.TestConfig;
 import org.example.models.Department;
 import org.example.models.Employee;
+import org.example.models.PairCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -21,11 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 @SpringJUnitConfig(TestConfig.class)
 @DisplayName ("Start of DAO testing")
-@ActiveProfiles ("test")
 public class JdbcDepartmentDAOTest {
 
     @Autowired
@@ -57,6 +55,20 @@ public class JdbcDepartmentDAOTest {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",4);
         String tittle = template.queryForObject(SQL_GET_TITTLE_FROM_DEPARTMENT_BY_ID, parameterSource, String.class);
         Assertions.assertEquals("ORP department", tittle);
+    }
+
+    @Test
+    @DisplayName("The findDepartment() method should find a department")
+    @SqlGroup({
+            @Sql(value = "classpath:test-data.sql",
+                    config = @SqlConfig(encoding = "utf-8", separator = ";", commentPrefix = "--"),
+                    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(value = "classpath:clean-up.sql",
+                    config = @SqlConfig(encoding = "utf-8",separator = ";", commentPrefix = "--"),
+                    executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    })
+    public void findDepartment(){
+        Assertions.assertEquals("Human Resources Department",departmentDAO.findDepartment(2).getTittle());
     }
 
     @Test
@@ -191,14 +203,14 @@ public class JdbcDepartmentDAOTest {
                     executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     })
     public void findAllAverageSalariesByDepartment(){
-        Map<Department,Double> resultMap = departmentDAO.findAllAverageSalariesByDepartment();
-        Assertions.assertEquals(3, resultMap.size());
-        Double averageSalaryForDevelopers = resultMap.entrySet()
+        List<PairCase> resultList = departmentDAO.findAllAverageSalariesByDepartment();
+        Assertions.assertEquals(3, resultList.size());
+        Double averageSalaryForDevelopers = resultList
                 .stream()
-                .filter(a -> "developer department".equals(a.getKey().getTittle()))
+                .filter(a -> "Developer department".equals(a.getDepartment().getTittle()))
                 .findFirst()
                 .orElseThrow()
-                .getValue();
+                .getDouble();
         Assertions.assertEquals(averageSalaryForDevelopers, 3000d);
     }
 

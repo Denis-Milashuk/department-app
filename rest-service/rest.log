@@ -1,0 +1,43 @@
+698  [main] DEBUG org.example.config.TestConfig - Bean namedParameterJdbcTemplate for tests was created
+704  [main] DEBUG org.example.config.TestConfig - DBCP-Test DataSource was created
+914  [main] DEBUG org.example.dao.JdbcDepartmentDAO - NamedParameterJdbcTemplate was injected
+729  [main] DEBUG org.example.config.TestConfig - Bean namedParameterJdbcTemplate for tests was created
+737  [main] DEBUG org.example.config.TestConfig - DBCP-Test DataSource was created
+993  [main] DEBUG org.example.dao.JdbcDepartmentDAO - NamedParameterJdbcTemplate was injected
+225  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+235  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+215  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+226  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+219  [main] DEBUG o.e.c.DepartmentsRestController - Method "updateDepartmentById" was called on request mapping /departments/1
+226  [main] DEBUG o.e.c.DepartmentsRestController - Method "updateDepartmentById" was called on request mapping /departments/2
+249  [main] DEBUG o.e.c.DepartmentsRestController - Method "findEmployeeById" was called on request mapping /departments/1/employees/1
+250  [main] DEBUG o.e.c.DepartmentsRestController - Method "findEmployeeById" was called on request mapping /departments/1/employees/2
+252  [main] DEBUG o.e.c.DepartmentsRestController - Method "createDepartment" was called on request mapping /departments
+253  [main] DEBUG o.e.c.DepartmentsRestController - Method "createDepartment" was called on request mapping /departments
+260  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees
+268  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01
+283  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01&Date2=1970-01-01
+284  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees
+284  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01
+284  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01&Date2=1970-01-01
+285  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees
+286  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01
+286  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAllEmployeesByDepartmentId()" was called on request mapping /departments/1/employees?Date1=1970-01-01&Date2=1970-01-01
+289  [main] DEBUG o.e.c.DepartmentsRestController - Method "deleteDepartmentById" was called on request mapping /departments/1
+291  [main] DEBUG o.e.c.DepartmentsRestController - Method "deleteDepartmentById" was called on request mapping /departments/0
+296  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAverageSalary()" was called on request mapping /departments/averageSalary
+297  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAverageSalary()" was called on request mapping /departments/averageSalary
+299  [main] DEBUG o.e.c.DepartmentsRestController - Method "getAverageSalary()" was called on request mapping /departments/averageSalary
+302  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+303  [main] DEBUG o.e.c.DepartmentsRestController - Method "findDepartmentById" was called on request mapping /departments/1
+306  [main] DEBUG o.e.c.DepartmentsRestController - Method "createEmployeeByDepartmentId" was called on request mapping /departments/1/employees
+307  [main] DEBUG o.e.c.DepartmentsRestController - Method "createEmployeeByDepartmentId" was called on request mapping /departments/2/employees
+312  [main] DEBUG o.e.c.DepartmentsRestController - Method "deleteEmployeeById" was called on request mapping /departments/1/employees/1
+313  [main] DEBUG o.e.c.DepartmentsRestController - Method "deleteEmployeeById" was called on request mapping /departments/1/employees/2
+317  [main] DEBUG o.e.c.DepartmentsRestController - Method "updateEmployeeById" was called on request mapping /departments/1/employees/1
+318  [main] DEBUG o.e.c.DepartmentsRestController - Method "updateEmployeeById" was called on request mapping /departments/1/employees/2
+932  [main] DEBUG org.example.config.TestConfig - Bean namedParameterJdbcTemplate for tests was created
+942  [main] DEBUG org.example.config.TestConfig - DBCP-Test DataSource was created
+1266 [main] DEBUG org.example.dao.JdbcDepartmentDAO - NamedParameterJdbcTemplate was injected
+1554 [main] DEBUG org.example.dao.JdbcDepartmentDAO - Added Employee with id = 9.
+1579 [main] DEBUG org.example.dao.JdbcDepartmentDAO - Added Department with id = org.springframework.jdbc.support.GeneratedKeyHolder@75504cef.

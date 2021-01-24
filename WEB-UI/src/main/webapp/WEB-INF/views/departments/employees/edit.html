@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<form th:method="PUT" th:action="@{/departments/{department_id}/employees/{id}(department_id=${employee.getDepartmentId()},id=${employee.getId()})}" th:object="${employee}">
+    <label for="firstName">Enter first name:</label>
+    <input type="text" th:field="*{firstName}" id="firstName">
+    <br/>
+    <label for="lastName">Enter last name:</label>
+    <input type="text" th:field="*{lastName}" id="lastName">
+    <br/>
+    <label for="salary">Enter salary:</label>
+    <input type="number" th:field="*{salary}" id="salary">
+    <br/>
+    <label for="birthDate">Enter birthdate:</label>
+    <input type="text" th:field="*{birthDate}" id="birthDate">
+    <br/>
+    <input type="submit" value="Update">
+</form>
+<hr/>
+<a th:href="@{/departments/{department_id}/employees/{id}(department_id = ${department_id},id = ${employee.getId()})}">Back</a>
+</body>
+</html>

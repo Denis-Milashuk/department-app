@@ -4,3 +4,7 @@
 /src/
 rest-service/target/
 rest-service/test.log
+WEB-UI/target/
+WEB-UI/test.log
+models/target/
+models/test.log

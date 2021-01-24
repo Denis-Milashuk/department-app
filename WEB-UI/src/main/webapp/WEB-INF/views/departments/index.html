@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Departments</title>
+</head>
+<body>
+<ol>Departments:
+    <li th:each="department : ${departments}">
+        <a th:href="@{departments/{department_id}/employees(department_id = ${department.getDepartment().getId()})}"
+           th:text="${department.getDepartment().getTittle()} + '.'">department</a>
+        <span th:text="' Average salary: ' + ${department.getDouble()} + ' rubles.'"></span>
+        <a th:href="@{departments/{id}/edit(id = ${department.getDepartment().getId()})}">Edit department</a>
+    </li>
+</ol>
+<br/>
+<hr/>
+<div>
+    <a th:href="@{departments/new}">Create new Department</a>
+</div>
+</body>
+</html>

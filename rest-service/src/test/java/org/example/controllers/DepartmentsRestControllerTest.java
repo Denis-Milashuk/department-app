@@ -3,6 +3,7 @@ package org.example.controllers;
 import org.example.dao.JdbcDepartmentDAO;
 import org.example.models.Department;
 import org.example.models.Employee;
+import org.example.models.PairCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import java.sql.Date;
 import java.util.*;
 
-@DisplayName("Start of DepartmentController testing")
-public class DepartmentControllerTest {
+@DisplayName("Start of DepartmentRestController testing")
+public class DepartmentsRestControllerTest {
 
     private static final Department DEPARTMENT = new Department();
     private static final Employee EMPLOYEE = new Employee();
@@ -23,29 +24,29 @@ public class DepartmentControllerTest {
     private static final ResponseEntity<List<Employee>> RESPONSE_ENTITY_NOT_FOUND = new ResponseEntity<>(HttpStatus.NOT_FOUND);
     private static final ResponseEntity<List<Employee>> RESPONSE_ENTITY_NOT_MODIFIED = new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     private static final JdbcDepartmentDAO DEPARTMENT_DAO = Mockito.mock(JdbcDepartmentDAO.class);
-    private static final DepartmentsController CONTROLLER = new DepartmentsController(DEPARTMENT_DAO);
+    private static final DepartmentsRestController CONTROLLER = new DepartmentsRestController(DEPARTMENT_DAO);
 
     @Test
-    @DisplayName("The getAverageSalary() method should return a correct ResponseEntity object")
-    public void getAverageSalary(){
-        Map<Department,Double> responseMap = new HashMap<>();
+    @DisplayName("The getDepartmentsWithAverageSalaries method should return a correct ResponseEntity object")
+    public void getDepartmentsWithAverageSalaries(){
+        List<PairCase> responseList = new ArrayList<>();
         Department department1 = new Department();
         department1.setId(1);
         department1.setTittle("First department");
         Department department2 = new Department();
         department2.setId(2);
         department2.setTittle("Second department");
-        responseMap.put(department1,3000d);
-        responseMap.put(department2,5000d);
+        responseList.add(new PairCase(department1,3000d));
+        responseList.add(new PairCase(department2,5000d));
 
-        ResponseEntity<Map<Department,Double>> responseEntity = new ResponseEntity<>(responseMap, HttpStatus.OK);
-        Mockito.when(DEPARTMENT_DAO.findAllAverageSalariesByDepartment()).thenReturn(responseMap);
-        Assertions.assertEquals(responseEntity,CONTROLLER.getAverageSalary());
+        ResponseEntity<List<PairCase>> responseEntity = new ResponseEntity<>(responseList, HttpStatus.OK);
+        Mockito.when(DEPARTMENT_DAO.findAllAverageSalariesByDepartment()).thenReturn(responseList);
+        Assertions.assertEquals(responseEntity,CONTROLLER.getDepartmentsWithAverageSalaries());
 
         Mockito.when(DEPARTMENT_DAO.findAllAverageSalariesByDepartment()).thenReturn(null);
-        Assertions.assertEquals(RESPONSE_ENTITY_NOT_FOUND,CONTROLLER.getAverageSalary());
-        Mockito.when(DEPARTMENT_DAO.findAllAverageSalariesByDepartment()).thenReturn(new HashMap<>());
-        Assertions.assertEquals(RESPONSE_ENTITY_NOT_FOUND,CONTROLLER.getAverageSalary());
+        Assertions.assertEquals(RESPONSE_ENTITY_NOT_FOUND,CONTROLLER.getDepartmentsWithAverageSalaries());
+        Mockito.when(DEPARTMENT_DAO.findAllAverageSalariesByDepartment()).thenReturn(new ArrayList<>());
+        Assertions.assertEquals(RESPONSE_ENTITY_NOT_FOUND,CONTROLLER.getDepartmentsWithAverageSalaries());
     }
 
     @Test
@@ -103,6 +104,16 @@ public class DepartmentControllerTest {
         Assertions.assertEquals(RESPONSE_ENTITY_CREATED,CONTROLLER.createDepartment(DEPARTMENT));
         Mockito.when(DEPARTMENT_DAO.addDepartment(DEPARTMENT)).thenReturn(false);
         Assertions.assertEquals(RESPONSE_ENTITY_NOT_MODIFIED,CONTROLLER.createDepartment(DEPARTMENT));
+    }
+
+    @Test
+    @DisplayName("The findDepartmentById() method should return a correct ResponseEntity object")
+    public void findDepartmentById(){
+        Mockito.when(DEPARTMENT_DAO.findDepartment(1)).thenReturn(DEPARTMENT);
+        ResponseEntity<Department> responseEntity = new ResponseEntity<>(DEPARTMENT,HttpStatus.OK);
+        Assertions.assertEquals(responseEntity,CONTROLLER.findDepartmentById(1));
+        Mockito.when(DEPARTMENT_DAO.findDepartment(1)).thenReturn(null);
+        Assertions.assertEquals(new ResponseEntity<Department>(HttpStatus.NOT_FOUND),CONTROLLER.findDepartmentById(1));
     }
 
     @Test

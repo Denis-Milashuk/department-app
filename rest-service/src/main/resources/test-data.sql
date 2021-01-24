@@ -1,5 +1,5 @@
 INSERT INTO department (tittle)
-VALUES ('developer department'),
+VALUES ('Developer department'),
        ('Human Resources Department'),
        ('Logistics Department');
 
